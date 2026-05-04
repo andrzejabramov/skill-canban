@@ -1,0 +1,35 @@
+:root {
+  /* Layout */
+  --max-width-container: 1235px;
+  --header-height: 55px;
+  --footer-height: 55px;
+
+  /* Colors */
+  --color-bg-root: #0079bf;
+  --color-bg-header: #0067a3;
+  --color-bg-footer: #0067a3;
+  --color-bg-menu: #0079bf;
+  --color-text-white: #ffffff;
+  --color-border-white: #ffffff;
+
+  /* Typography */
+  --font-family: "Roboto", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-title: 28px;
+  --font-size-status: 18px;
+  --font-weight-regular: 400;
+  --line-height-compact: 100%;
+
+  /* Spacing & Dimensions */
+  --spacing-title-left: 14px;
+  --spacing-footer-status-left: 21px;
+  --spacing-footer-owner-right: 19px;
+  --spacing-menu-right: 16px;
+  --status-gap: 36px;
+
+  --user-menu-width: 64px;
+  --user-menu-height: 40px;
+  --avatar-size: 40px;
+  --arrow-container-size: 24px;
+  --arrow-down-width: 12px;
+  --arrow-down-height: 7.42px;
+}

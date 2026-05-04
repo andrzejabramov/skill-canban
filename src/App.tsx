@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+// ✅ Прямые пути из корня src/
+import Header from "./components/layout/Header/Header";
+import Footer from "./components/layout/Footer/Footer";
+import "./styles/global.css";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <Header />
+      <main>
+        <div
+          style={{
+            padding: "24px",
+            color: "var(--color-text-white)",
+            textAlign: "center",
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <h2>Основная область доски</h2>
+          <p>Ожидает добавления колонок и карточек</p>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;

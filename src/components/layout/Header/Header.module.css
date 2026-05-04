@@ -1,0 +1,26 @@
+.header {
+  width: 100%;
+  max-width: var(--max-width-container);
+  height: var(--header-height);
+  background-color: var(--color-bg-header);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleWrapper {
+  height: 45px;
+  margin-left: var(--spacing-title-left);
+  display: flex;
+  align-items: center;
+}
+
+.titleText {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-title);
+  color: var(--color-text-white);
+  line-height: var(--line-height-compact);
+  letter-spacing: 0;
+}

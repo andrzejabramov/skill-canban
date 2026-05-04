@@ -1,0 +1,36 @@
+/* src/components/layout/Footer/Footer.module.css */
+.footer {
+  width: 100%;
+  max-width: var(--max-width-container); /* 1235px из макета */
+  height: var(--footer-height);
+  background-color: var(--color-bg-footer);
+
+  /* ✅ Центрируем по горизонтали: 0 сверху/снизу, auto слева/справа */
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statusList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-left: var(--spacing-footer-status-left);
+  gap: var(--status-gap);
+}
+
+.statusItem,
+.ownerText {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-status);
+  color: var(--color-text-white);
+  line-height: var(--line-height-compact);
+  letter-spacing: 0;
+}
+
+.ownerText {
+  margin-right: var(--spacing-footer-owner-right);
+}
