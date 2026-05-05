@@ -5,8 +5,12 @@ import styles from "./Footer.module.css";
 
 const Footer: React.FC = () => {
   const { state } = useKanban();
-  const activeCount = state.columns["backlog"].taskIds.length;
-  const finishedCount = state.columns["finished"].taskIds.length;
+  const activeCount = Object.values(state.tasks).filter(
+    (t) => t.columnId === "backlog",
+  ).length;
+  const finishedCount = Object.values(state.tasks).filter(
+    (t) => t.columnId === "finished",
+  ).length;
   const currentYear = new Date().getFullYear();
 
   return (

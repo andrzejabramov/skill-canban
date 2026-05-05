@@ -7,6 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 50;
 }
 
 .titleWrapper {
@@ -23,4 +25,17 @@
   color: var(--color-text-white);
   line-height: var(--line-height-compact);
   letter-spacing: 0;
+}
+
+/* ✅ FIX: На мобильном хедер сливается с main, заголовок скрывается, меню остаётся */
+@media (max-width: 768px) {
+  .header {
+    background-color: var(--color-bg-root); /* #0079BF */
+    height: 50px;
+    justify-content: flex-end;
+    padding: 0 16px;
+  }
+  .titleWrapper {
+    display: none;
+  }
 }

@@ -34,3 +34,9 @@
 .ownerText {
   margin-right: var(--spacing-footer-owner-right);
 }
+
+@media (max-width: 768px) {
+  .footer {
+    display: none; /* Скрываем футер по ТЗ */
+  }
+}

@@ -1,0 +1,30 @@
+.mainContent {
+  width: 1200px;
+  margin: 20px 16px auto 19px; /* Оставлено строго по ТЗ */
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+.mainContent {
+  width: 1200px;
+  margin: 20px 16px auto 19px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    width: 100%;
+    margin: 0;
+    /* Верх 57, Право 35, Низ 50, Лево 21 */
+    padding: 57px 35px 50px 21px;
+    flex-direction: column;
+    gap: 24px; /* расстояние между колонками */
+    align-items: stretch;
+    box-sizing: border-box;
+  }
+}

@@ -1,10 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 @import "./variables.css";
 
-* {
+/* FIX: Только классы, глобальный сброс */
+.global-box-fix {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 html,
@@ -13,19 +17,36 @@ body,
   height: 100%;
   font-family: var(--font-family);
   background-color: var(--color-bg-root);
+  margin: 0;
+  padding: 0;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 main {
-  flex: 1; /* Занимает всё пространство между header и footer */
+  flex: 1;
   width: 100%;
   max-width: var(--max-width-container);
   margin: 0 auto;
   overflow-y: auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .header {
+    display: none;
+  }
+  .footer {
+    display: none;
+  }
+  main {
+    max-width: 100%;
+  }
 }

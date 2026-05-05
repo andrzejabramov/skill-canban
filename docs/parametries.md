@@ -162,8 +162,6 @@
 | heigh | 200px   |          |
 | color | #0079BF |          |
 
-# laptop-beard
-
 # mob
 
 | param   | values  | describe |
@@ -173,3 +171,120 @@
 | color   | #0079BF |          |
 | angle   | 0 deg   |          |
 | opacity | 1       |          |
+
+## main-content (parent main)
+
+| param  | values              | describe |
+| ------ | ------------------- | -------- |
+| width  | 1200px              |          |
+| margin | 20px 16px auto 19px |          |
+| gap    | 24px                | flex ?   |
+
+### list (parent main) - 4 штуки горизонтальное
+
+| param         | values     | describe |
+| ------------- | ---------- | -------- |
+| width         | 282px      |          |
+| margin        | 0 0 auto 0 |          |
+| gap           | 15px       |          |
+| angle         | 0 deg      |          |
+| opacity       | 1          |          |
+| border-radius | 10px       |          |
+| color         | #EBECF0    |          |
+
+#### list-title (parent list)
+
+| param              | values              | describe |
+| ------------------ | ------------------- | -------- |
+| width              | 100%                |          |
+| height             | 17px                |          |
+| margin             | 12px 12px auto 12px |          |
+| angle              | 0 deg               |          |
+| opacity            | 1                   |          |
+| font-family        | Roboto              |          |
+| font-weight        | 400                 |          |
+| eading-trim        | NONE                |          |
+| font-size          | 18px                |          |
+| line-height        | 100%                |          |
+| letter-spacing     | 0%                  |          |
+| text-align         | left                |          |
+| color              | #000000             |          |
+| content list-title | Backlog             | list 1   |
+| content list-title | Ready               | list 2   |
+| content list-title | in Progress         | list 3   |
+| content list-title | Finished            | list 4   |
+
+#### list-items (parent list)
+
+| param  | values | describe |
+| ------ | ------ | -------- |
+| width  | 258px  |          |
+| height | Hug    |          |
+| margin | 0 12px |          |
+| gap    | 15px   |          |
+
+##### list-item (parent list-items)
+
+| param         | values          | describe |
+| ------------- | --------------- | -------- |
+| width         | 258px           |          |
+| height        | Hug             |          |
+| border-radius | 5px             |          |
+| color         | #FFFFFF         |          |
+| padding       | 7px 9px 7px 8px |          |
+
+###### text-item (parent list-item)
+
+| param              | values                          | describe   |
+| ------------------ | ------------------------------- | ---------- |
+| font-family        | Roboto                          |            |
+| font-weight        | 400                             |            |
+| eading-trim        | NONE                            |            |
+| font-size          | 18px                            |            |
+| line-height        | 100%                            |            |
+| letter-spacing     | 0%                              |            |
+| text-align         | left                            |            |
+| color              | #000000                         |            |
+| content list-title | Login page – performance issues | переменная |
+
+#### list-footer (parent list)
+
+| param   | values             | describe |
+| ------- | ------------------ | -------- |
+| width   | 100%               |          |
+| height  | 21px               |          |
+| margin  | 17px 20px 8px 20px |          |
+| angle   | 0 deg              |          |
+| opacity | 1                  |          |
+| gap     | 3px                |          |
+
+##### cross (parent list-footer)
+
+| param       | values               | describe |
+| ----------- | -------------------- | -------- |
+| width       | 14px                 |          |
+| height      | 14px                 |          |
+| margin-left | 0                    |          |
+| vertical    | medium               |          |
+| angle       | 0 deg                |          |
+| opacity     | 1                    |          |
+| gap         | 3px                  |          |
+| path        | public/img/cross.svg |          |
+
+##### text (parent list-footer)
+
+| param              | values   | describe   |
+| ------------------ | -------- | ---------- |
+| font-family        | Roboto   |            |
+| font-weight        | 400      |            |
+| eading-trim        | NONE     |            |
+| font-size          | 18px     |            |
+| line-height        | 100%     |            |
+| letter-spacing     | 0%       |            |
+| text-align         | left     |            |
+| color              | #5E6C84  |            |
+| content list-title | Add card | list 1,3,4 |
+
+## Вот эскиз нового поля для добавления задачи
+
+## | ****************\_\_**************** |

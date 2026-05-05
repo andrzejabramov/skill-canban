@@ -1,0 +1,93 @@
+/* FIX: Растягивание на весь main */
+.container {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  box-sizing: border-box;
+
+  /* ✅ Точные отступы по ТЗ */
+  margin: 22px 28px 20px 26px;
+
+  /* ✅ Растягиваем до низа: занимаем всё доступное место в <main> */
+  flex: 1;
+  min-height: 0; /* Защита от переполнения flex-контейнера */
+}
+
+@media (max-width: 768px) {
+  .container {
+    /* ✅ Mobile: ≤768px */
+    margin: 157px 21px 157px 35px;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #5e6c84;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.closeBtn:hover {
+  color: #172b4d;
+}
+
+.title {
+  margin: 0 0 24px 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 28px;
+  color: #172b4d;
+  padding-right: 40px;
+}
+
+.descriptionBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.descriptionText {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #42526e;
+  cursor: pointer;
+  padding: 16px;
+  background: #f4f5f7;
+  border-radius: 4px;
+  min-height: 40px;
+  transition: background 0.15s;
+  white-space: pre-wrap;
+}
+
+.descriptionText:hover {
+  background: #ebecf0;
+}
+
+.textarea {
+  width: 100%;
+  flex: 1;
+  padding: 16px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  resize: none;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  border-color: #4c9aff;
+  box-shadow: 0 0 0 2px rgba(76, 154, 255, 0.2);
+}

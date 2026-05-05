@@ -1,123 +1,120 @@
-// src/context/KanbanContext.tsx
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useCallback,
+  ReactNode,
+} from "react";
+import { ColumnId, Task } from "../types"; // Проверь путь, если типы лежат в ../types
 
-import { KanbanState, KanbanAction, Task, ColumnId } from "../types";
-import { initialData } from "../services/mockData";
-import { loadState, saveState } from "../services/storage";
-
-interface KanbanContextValue {
-  state: KanbanState;
-  dispatch: React.Dispatch<KanbanAction>;
-  getTasksByColumn: (columnId: ColumnId) => Task[];
+export interface KanbanState {
+  columns: Record<ColumnId, { id: ColumnId; title: string }>;
+  tasks: Record<string, Task>;
+  columnOrder: ColumnId[];
 }
 
-const KanbanContext = createContext<KanbanContextValue | undefined>(undefined);
+type Action =
+  | { type: "ADD_TASK"; payload: { columnId: ColumnId; title: string } }
+  | {
+      type: "MOVE_TASK";
+      payload: { taskId: string; from: ColumnId; to: ColumnId };
+    }
+  | {
+      type: "UPDATE_TASK";
+      payload: { taskId: string; updates: Partial<Pick<Task, "description">> };
+    };
 
-const kanbanReducer = (
-  state: KanbanState,
-  action: KanbanAction,
-): KanbanState => {
+const STORAGE_KEY = "kanban-state-v1";
+
+// Пустая структура по умолчанию (без тестовых задач)
+const defaultState: KanbanState = {
+  columns: {
+    backlog: { id: "backlog", title: "Backlog" },
+    ready: { id: "ready", title: "Ready" },
+    "in-progress": { id: "in-progress", title: "In Progress" },
+    finished: { id: "finished", title: "Finished" },
+  },
+  tasks: {},
+  columnOrder: ["backlog", "ready", "in-progress", "finished"],
+};
+
+// --- Reducer ---
+const kanbanReducer = (state: KanbanState, action: Action): KanbanState => {
   switch (action.type) {
     case "ADD_TASK": {
-      const { columnId, title } = action.payload;
+      const newTaskId = `task-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
       const newTask: Task = {
-        id: uuidv4(),
-        title: title.trim(),
-        createdAt: Date.now(),
+        id: newTaskId,
+        title: action.payload.title,
+        description: "",
+        columnId: action.payload.columnId,
       };
-      return {
-        ...state,
-        tasks: { ...state.tasks, [newTask.id]: newTask },
-        columns: {
-          ...state.columns,
-          [columnId]: {
-            ...state.columns[columnId],
-            taskIds: [...state.columns[columnId].taskIds, newTask.id],
-          },
-        },
-      };
+      return { ...state, tasks: { ...state.tasks, [newTaskId]: newTask } };
     }
-
     case "MOVE_TASK": {
-      const { taskId, from, to } = action.payload;
-      if (from === to) return state;
-
-      const fromColumn = state.columns[from];
-      const toColumn = state.columns[to];
-
+      const { taskId, to } = action.payload;
+      const task = state.tasks[taskId];
+      if (!task) return state;
       return {
         ...state,
-        columns: {
-          ...state.columns,
-          [from]: {
-            ...fromColumn,
-            taskIds: fromColumn.taskIds.filter((id) => id !== taskId),
-          },
-          [to]: {
-            ...toColumn,
-            taskIds: [...toColumn.taskIds, taskId],
-          },
-        },
+        tasks: { ...state.tasks, [taskId]: { ...task, columnId: to } },
       };
     }
-
     case "UPDATE_TASK": {
       const { taskId, updates } = action.payload;
+      const task = state.tasks[taskId];
+      if (!task) return state;
       return {
         ...state,
-        tasks: {
-          ...state.tasks,
-          [taskId]: { ...state.tasks[taskId], ...updates },
-        },
+        tasks: { ...state.tasks, [taskId]: { ...task, ...updates } },
       };
     }
-
-    case "LOAD_STATE":
-      return action.payload;
-
-    case "DELETE_TASK": {
-      const { taskId, columnId } = action.payload;
-      const { [taskId]: removed, ...restTasks } = state.tasks;
-      return {
-        ...state,
-        tasks: restTasks,
-        columns: {
-          ...state.columns,
-          [columnId]: {
-            ...state.columns[columnId],
-            taskIds: state.columns[columnId].taskIds.filter(
-              (id) => id !== taskId,
-            ),
-          },
-        },
-      };
-    }
-
     default:
       return state;
   }
 };
 
-export const KanbanProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [state, dispatch] = useReducer(kanbanReducer, initialData);
+// --- Context ---
+interface KanbanContextType {
+  state: KanbanState;
+  dispatch: React.Dispatch<Action>;
+  getTasksByColumn: (columnId: ColumnId) => Task[];
+}
 
-  React.useEffect(() => {
-    const saved = loadState();
-    if (saved) dispatch({ type: "LOAD_STATE", payload: saved });
-  }, []);
+const KanbanContext = createContext<KanbanContextType | null>(null);
 
-  React.useEffect(() => {
-    saveState(state);
-  }, [state]);
-
-  const getTasksByColumn = (columnId: ColumnId): Task[] => {
-    return state.columns[columnId].taskIds
-      .map((taskId) => state.tasks[taskId])
-      .filter((task): task is Task => task !== undefined);
+// --- Provider ---
+export const KanbanProvider = ({ children }: { children: ReactNode }) => {
+  // ✅ Ленивая инициализация: читаем localStorage ТОЛЬКО при первом рендере
+  const loadState = (): KanbanState => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : defaultState;
+    } catch {
+      return defaultState;
+    }
   };
+
+  const [state, dispatch] = useReducer(kanbanReducer, undefined, loadState);
+
+  // ✅ Автоматическое сохранение при ЛЮБОМ изменении state
+  // ✅ Сохранение в localStorage с обработкой ошибок
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      // Для отладки можно раскомментировать:
+      // console.log("Saved to localStorage:", state);
+    } catch (error) {
+      console.error("❌ Failed to save to localStorage:", error);
+    }
+  }, [state]); // Зависимость только от state
+
+  const getTasksByColumn = useCallback(
+    (columnId: ColumnId) =>
+      Object.values(state.tasks).filter((task) => task.columnId === columnId),
+    [state.tasks],
+  );
 
   return (
     <KanbanContext.Provider value={{ state, dispatch, getTasksByColumn }}>
@@ -126,10 +123,10 @@ export const KanbanProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useKanban = (): KanbanContextValue => {
+// --- Hook ---
+export const useKanban = () => {
   const context = useContext(KanbanContext);
-  if (!context) {
-    throw new Error("useKanban must be used within KanbanProvider");
-  }
+  if (!context)
+    throw new Error("useKanban must be used within a KanbanProvider");
   return context;
 };

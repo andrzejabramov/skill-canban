@@ -1,0 +1,38 @@
+.card {
+  width: 100%; /* ✅ Растягиваем на всю ширину контейнера */
+  max-width: 100%;
+  height: fit-content;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 7px 9px 7px 8px;
+  list-style: none;
+  cursor: pointer;
+  box-sizing: border-box; /* ✅ Учитываем padding в ширине */
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-align: left;
+  color: #000000;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%; /* Растягиваем на всю ширину колонки */
+    box-sizing: border-box; /* Чтобы padding не вызывал горизонтальный скролл */
+  }
+}

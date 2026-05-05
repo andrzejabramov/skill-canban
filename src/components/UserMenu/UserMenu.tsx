@@ -1,3 +1,4 @@
+// src/components/UserMenu/UserMenu.tsx
 import React, { useState } from "react";
 import styles from "./UserMenu.module.css";
 
@@ -14,7 +15,6 @@ const UserMenu: React.FC = () => {
         type="button"
       >
         <div className={styles.avatarCircle}>
-          {/* ✅ Новая обертка с точными размерами из Figma */}
           <div className={styles.avatarInner}>
             <img
               src="/img/user-avatar.svg"
@@ -25,7 +25,7 @@ const UserMenu: React.FC = () => {
         </div>
         <div className={styles.arrowBlock}>
           <svg
-            className={styles.arrowDown}
+            className={`${styles.arrowDown} ${isOpen ? styles.open : ""}`}
             viewBox="0 0 12 7.42"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
