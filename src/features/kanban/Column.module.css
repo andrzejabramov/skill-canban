@@ -1,24 +1,26 @@
+/* ✅ Колонка: высота зависит от реального контента */
 .column {
   width: min(282px, calc(100% - 32px));
   min-width: 280px;
-  height: 100%; /* ✅ Вернули высоту, чтобы фон был виден */
+  /*height: auto; /* ✅ Убрали 100% → колонка сжимается под задачи */
+  min-height: 180px; /* ✅ Сохраняет серый фон, даже если задач 0 */
   margin: 0 0 auto 0;
   padding: 8px 4px 0 4px;
-  background-color: #ebecf0; /* ✅ Серый фон вернется */
+  background-color: #ebecf0;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  /* ✅ Убрали height: auto и align-self, которые всё сломали */
+  /*align-self: flex-start;*/
 }
 
-/* ✅ БАЗОВЫЕ ПРАВИЛА (работают на всех экранах) */
+/* ✅ ОДИН .columnFooter (объединил конфликтующие дубли) */
 .columnFooter {
   width: 100%;
   height: 29px;
-  margin: 15px 0 8px 0; /* ✅ 15px сверху = gap у .columnList, снизу 8px как было */
+  margin: 15px 0 8px 0; /* ✅ Твой отступ 15px сверху, как у gap списка */
   padding: 0 4px;
   display: flex;
   align-items: center;
@@ -42,16 +44,17 @@
   flex-shrink: 0; /* ✅ Заголовок не сжимается */
 }
 
-/* ✅ Область задач: занимает всё свободное место, скроллится */
+/* ✅ Область задач: НЕ растягивает колонку, скролл только при превышении лимита */
 .scrollArea {
-  flex: 1; /* ✅ Растягивается на всю высоту между заголовком и футером */
-  min-height: 0; /* ✅ Защита от переполнения flex-контейнера */
+  flex: 0 0 auto;
+  /*height: auto; /* ✅ Убрали flex: 1 → больше не тянет колонку */
+  min-height: 0; /* ✅ Защита от переполнения */
+  max-height: 583px; /* ✅ Скролл появляется только если задач много */
   margin: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  /* max-height: 583px;  ← Убрано, чтобы блок мог растягиваться до футера */
-  overflow-y: auto; /* ✅ Вертикальный скролл только здесь */
+  overflow-y: auto;
   overflow-x: hidden;
   padding-right: 4px;
 }
@@ -70,10 +73,12 @@
   width: 12px;
   background: transparent;
 }
+
 .scrollArea::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 6px;
 }
+
 .scrollArea::-webkit-scrollbar-thumb {
   width: 12px;
   height: 52px;
@@ -82,19 +87,9 @@
   border: 2px solid transparent;
   background-clip: padding-box;
 }
+
 .scrollArea::-webkit-scrollbar-thumb:hover {
   background-color: #a8a8a8;
-}
-
-/* ✅ Футер: не скроллится, всегда прижат к низу */
-.columnFooter {
-  width: 100%;
-  height: 21px;
-  margin: 17px 0 8px 0; /* ✅ Горизонтальные убраны (как ты просил), вертикальные сохранены */
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  flex-shrink: 0; /* ✅ Запрещаем сжатие футера */
 }
 
 /* ✅ МОБИЛЬНАЯ АДАПТАЦИЯ (сохранена твоя логика) */
