@@ -101,10 +101,22 @@ export const KanbanProvider = ({ children }: { children: ReactNode }) => {
   // ✅ Автоматическое сохранение при ЛЮБОМ изменении state
   // ✅ Сохранение в localStorage с обработкой ошибок
   useEffect(() => {
+    console.log(
+      "🔄 [KanbanContext] State изменился. Текущие задачи:",
+      state.tasks,
+    );
+
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const serialized = JSON.stringify(state);
+      localStorage.setItem(STORAGE_KEY, serialized);
       // Для отладки можно раскомментировать:
       // console.log("Saved to localStorage:", state);
+      console.log("✅ [LocalStorage] Сохранено успешно! Ключ:", STORAGE_KEY);
+      console.log(
+        "💾 [LocalStorage] Размер данных:",
+        serialized.length,
+        "символов",
+      );
     } catch (error) {
       console.error("❌ Failed to save to localStorage:", error);
     }

@@ -1,23 +1,36 @@
-/* src/features/kanban/Column.module.css */
-
-/* ✅ БАЗОВЫЕ ПРАВИЛА (работают на всех экранах) */
 .column {
   width: min(282px, calc(100% - 32px));
+  min-width: 280px;
+  height: 100%; /* ✅ Вернули высоту, чтобы фон был виден */
   margin: 0 0 auto 0;
-  background-color: #ebecf0;
+  padding: 8px 4px 0 4px;
+  background-color: #ebecf0; /* ✅ Серый фон вернется */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-
-  /* ✅ FIX: Жёстко убираем горизонтальный скролл у самой колонки */
+  box-sizing: border-box;
   overflow-x: hidden;
+  /* ✅ Убрали height: auto и align-self, которые всё сломали */
+}
+
+/* ✅ БАЗОВЫЕ ПРАВИЛА (работают на всех экранах) */
+.columnFooter {
+  width: 100%;
+  height: 29px;
+  margin: 15px 0 8px 0; /* ✅ 15px сверху = gap у .columnList, снизу 8px как было */
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .columnTitle {
   width: calc(100% - 24px);
   height: 17px;
-  margin: 12px 12px auto 12px;
+  margin: 12px 12px 15px 12px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -26,19 +39,21 @@
   text-align: left;
   color: #000000;
   box-sizing: border-box;
+  flex-shrink: 0; /* ✅ Заголовок не сжимается */
 }
 
+/* ✅ Область задач: занимает всё свободное место, скроллится */
 .scrollArea {
+  flex: 1; /* ✅ Растягивается на всю высоту между заголовком и футером */
+  min-height: 0; /* ✅ Защита от переполнения flex-контейнера */
   margin: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 583px;
-  overflow-y: auto;
-
-  /* ✅ FIX: Запрещаем горизонтальный скролл внутри зоны карточек */
+  /* max-height: 583px;  ← Убрано, чтобы блок мог растягиваться до футера */
+  overflow-y: auto; /* ✅ Вертикальный скролл только здесь */
   overflow-x: hidden;
-  padding-right: 4px; /* Место под кастомный скроллбар */
+  padding-right: 4px;
 }
 
 .columnList {
@@ -50,7 +65,7 @@
   gap: 15px;
 }
 
-/* Кастомный скроллбар */
+/* Кастомный скроллбар (сохранён твой) */
 .scrollArea::-webkit-scrollbar {
   width: 12px;
   background: transparent;
@@ -71,31 +86,35 @@
   background-color: #a8a8a8;
 }
 
+/* ✅ Футер: не скроллится, всегда прижат к низу */
 .columnFooter {
   width: 100%;
   height: 21px;
-  margin: 17px 20px 8px 20px;
+  margin: 17px 0 8px 0; /* ✅ Горизонтальные убраны (как ты просил), вертикальные сохранены */
   display: flex;
   align-items: center;
   gap: 3px;
+  flex-shrink: 0; /* ✅ Запрещаем сжатие футера */
 }
 
-/* ✅ МОБИЛЬНАЯ АДАПТАЦИЯ (только меняет размеры, не трогает overflow) */
+/* ✅ МОБИЛЬНАЯ АДАПТАЦИЯ (сохранена твоя логика) */
 @media (max-width: 768px) {
   .column {
     width: 100%;
     margin: 0;
     border-radius: 8px;
+    height: auto;
+    min-height: auto;
   }
 
   .columnTitle {
     font-size: 16px;
-    margin: 10px 10px auto 10px;
+    margin: 10px 10px 15px 10px;
   }
 
   .scrollArea {
     margin: 0 10px;
-    max-height: 45vh;
+    max-height: 45vh; /* ✅ Ограничение высоты на мобильных оставлено */
   }
 
   .columnFooter {

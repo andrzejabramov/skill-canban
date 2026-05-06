@@ -25,17 +25,21 @@ const Column: React.FC<ColumnProps> = ({ columnId, title }) => {
 
   return (
     <section className={styles.column}>
+      {/* ✅ Заголовок: не скроллится */}
       <h2 className={styles.columnTitle}>{title}</h2>
 
+      {/* ✅ Область скролла: только задачи */}
       <div className={styles.scrollArea}>
         <ul className={styles.columnList}>
           {tasks.map((task) => (
             <TaskCard key={task.id} task={task} />
           ))}
-          {/* FIX: Форма рендерится внутри списка как последний элемент */}
           <AddCardForm columnId={columnId} sourceTasks={sourceTasks} />
         </ul>
       </div>
+
+      {/* ✅ Футер с формой: ЗАФИКСИРОВАН внизу, не скроллится */}
+      {/*<AddCardForm columnId={columnId} sourceTasks={sourceTasks} />*/}
     </section>
   );
 };

@@ -21,7 +21,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(UNDERSCORES);
   const inputRef = useRef<HTMLInputElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null); // ✅ Добавляем реф
+  const footerRef = useRef<HTMLDivElement>(null);
   const isInputActive =
     inputValue !== UNDERSCORES && inputValue.trim().length > 0;
   const isBacklog = columnId === "backlog";
@@ -29,8 +29,6 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-
-    // Если сейчас отображаются подчеркивания — удаляем ВСЕ символы "_" из ввода
     if (inputValue === UNDERSCORES) {
       setInputValue(val.replace(/_/g, ""));
     } else {
@@ -38,6 +36,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
     }
   };
 
+  // Авто-скролл вниз при открытии формы
   useEffect(() => {
     if (isOpen && footerRef.current) {
       setTimeout(() => {
@@ -65,7 +64,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
     setIsOpen(false);
   };
 
-  // FIX: Закрытое состояние (плюс всегда виден)
+  // 🔹 Закрытое состояние (кнопка + Add card)
   if (!isOpen) {
     return (
       <div className={styles.formWrapper}>
@@ -81,28 +80,31 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
     );
   }
 
-  // FIX: Backlog - инлайн карточка
+  // 🔹 Backlog: инлайн-инпут с подчеркиваниями — ВСЁ В ОДНОМ <li>
   if (isBacklog) {
     return (
-      <>
-        <li className={styles.newTaskCard}>
-          <input
-            ref={inputRef}
-            className={styles.newTaskInput}
-            value={inputValue}
-            onChange={handleChange}
-            placeholder=""
-          />
-        </li>
+      <li className={styles.newTaskCard}>
+        <input
+          ref={inputRef}
+          className={styles.newTaskInput}
+          value={inputValue}
+          onChange={handleChange}
+          placeholder=""
+        />
         <footer ref={footerRef} className={styles.columnFooter}>
-          <button
-            className={`${styles.submitBtn} ${!isInputActive ? styles.disabled : ""}`}
-            type="button"
-            onClick={handleSubmit}
-            disabled={!isInputActive}
-          >
-            {isInputActive ? "Submit" : "+ Add card"}
-          </button>
+          <div className={styles.footerLeft}>
+            <span className={styles.plusIcon}>+</span>
+            <span className={styles.addText}>Add card</span>
+            {isInputActive && (
+              <button
+                className={styles.submitBtn}
+                type="button"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            )}
+          </div>
           <button
             type="button"
             className={styles.cancelBtn}
@@ -111,21 +113,25 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
             ×
           </button>
         </footer>
-      </>
+      </li>
     );
   }
 
-  // FIX: Остальные колонки - нативный select
+  // 🔹 Остальные колонки: инлайн-карточка с нативным <select> — ВСЁ В ОДНОМ <li>
   return (
-    <div className={styles.formWrapper}>
+    <li className={styles.newTaskCard}>
       <select
-        className={styles.dropdownSelect}
+        className={styles.taskDropdown}
         defaultValue=""
-        onChange={(e) => e.target.value && handleMoveTask(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value) {
+            handleMoveTask(e.target.value);
+          }
+        }}
         autoFocus
       >
         <option value="" disabled>
-          Select task...
+          Move task...
         </option>
         {sourceTasks.map((task) => (
           <option key={task.id} value={task.id}>
@@ -133,14 +139,16 @@ const AddCardForm: React.FC<AddCardFormProps> = ({ columnId, sourceTasks }) => {
           </option>
         ))}
       </select>
-      <button
-        type="button"
-        className={styles.cancelBtn}
-        onClick={() => setIsOpen(false)}
-      >
-        ×
-      </button>
-    </div>
+      <footer ref={footerRef} className={styles.columnFooter}>
+        <button
+          type="button"
+          className={styles.cancelBtn}
+          onClick={() => setIsOpen(false)}
+        >
+          ×
+        </button>
+      </footer>
+    </li>
   );
 };
 
