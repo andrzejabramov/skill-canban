@@ -1,8 +1,18 @@
-.formWrapper {
+.formLi {
   width: 100%;
-  margin-top: 8px;
+  margin: 0;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-sizing: border-box;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
+/* Футерная кнопка */
 .addButton {
   width: 100%;
   background: transparent;
@@ -16,139 +26,72 @@
   text-align: left;
   transition: color 0.15s;
 }
-.addButton:hover:not(.disabled) {
+.addButton:hover:not(:disabled) {
   color: #172b4d;
   text-decoration: underline;
 }
-.disabled {
+.addButton:disabled {
   color: #a5adba !important;
   cursor: not-allowed !important;
 }
 
-/* ✅ Инлайн-карточка новой задачи */
-.newTaskCard {
-  width: 100%;
-  margin: 0;
-  padding: 8px 8px 4px 8px; /* ✅ Симметрично, низ уменьшен для стыковки с футером */
-  box-sizing: border-box; /* ✅ Паддинг не увеличивает ширину */
-  background: #ffffff;
-  border-radius: 5px 5px 0 0; /* ✅ Скругление только сверху */
-  list-style: none;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
 .newTaskInput {
-  width: 100%;
+  flex: 1;
   background: transparent;
   border: none;
   outline: none;
-  padding: 4px 0;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
   color: #172b4d;
   box-sizing: border-box;
-  caret-color: #0052cc;
+  padding: 2px 0;
 }
 
-.columnFooter {
-  width: 100%;
-  height: 29px;
-  margin: 15px 0 8px 0; /* ✅ 15px сверху = gap у .columnList, снизу 8px как было */
-  padding: 0 4px;
+.actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  flex-shrink: 0;
+  padding-top: 4px;
 }
-
 .submitBtn {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 102px;
-  height: 29px;
   background-color: #0079bf;
-  color: #ffffff;
+  color: #fff;
   border: none;
   border-radius: 4px;
+  padding: 6px 16px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  z-index: 2;
   transition: background-color 0.2s;
 }
 .submitBtn:hover {
   background-color: #0052cc;
 }
-.submitBtn:hover:not(.disabled) {
-  background-color: #0065ff;
-}
-
 .cancelBtn {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
   color: #5e6c84;
   cursor: pointer;
-  padding: 4px;
+  padding: 4px 8px;
   flex-shrink: 0;
 }
 .cancelBtn:hover {
   color: #172b4d;
 }
 
-.dropdownSelect {
-  flex: 1;
-  padding: 6px;
-  font-size: 14px;
-  border: 1px solid #dfe1e6;
-  border-radius: 4px;
-  background: #ffffff;
-  cursor: pointer;
-  box-sizing: border-box;
-}
-
-/* ✅ Нативный селект без рамок, вписанный в карточку */
+/* ✅ Селект для перемещения задач */
 .taskDropdown {
   flex: 1;
   background: transparent;
   border: none;
-  outline: none !important;
+  outline: none;
   font-family: "Roboto", sans-serif;
-  font-weight: 400;
   font-size: 14px;
-  line-height: 100%;
   color: #172b4d;
   cursor: pointer;
   padding: 4px 0;
-  -webkit-appearance: auto;
-  -moz-appearance: auto;
   appearance: auto;
-}
-
-.footerLeft {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  flex: 1;
-}
-
-.plusIcon {
-  font-size: 18px;
-  color: #a5adba;
-  margin-right: 4px;
-  flex-shrink: 0;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-.addText {
-  font-size: 14px;
-  color: #a5adba;
-  pointer-events: none;
 }
