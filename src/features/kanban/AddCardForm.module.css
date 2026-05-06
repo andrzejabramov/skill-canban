@@ -1,5 +1,7 @@
+/* ✅ Контейнер формы: гарантируем, что селект и крестик в одной строке */
 .formLi {
   width: 100%;
+  min-width: 0; /* ✅ Ключевое: разрешает сжатие flex-элемента */
   margin: 0;
   padding: 8px;
   background: #ffffff;
@@ -10,9 +12,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  overflow: hidden; /* ✅ Обрезает всё, что пытается вылезти */
 }
 
-/* Футерная кнопка */
+/* ✅ Футерная кнопка + Add card */
 .addButton {
   width: 100%;
   background: transparent;
@@ -26,15 +29,18 @@
   text-align: left;
   transition: color 0.15s;
 }
+
 .addButton:hover:not(:disabled) {
   color: #172b4d;
   text-decoration: underline;
 }
+
 .addButton:disabled {
   color: #a5adba !important;
   cursor: not-allowed !important;
 }
 
+/* ✅ Поле ввода для Backlog */
 .newTaskInput {
   flex: 1;
   background: transparent;
@@ -55,9 +61,11 @@
   justify-content: space-between;
   padding-top: 4px;
 }
+
+/* ✅ Кнопка Submit (только для Backlog) */
 .submitBtn {
   background-color: #0079bf;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   padding: 6px 16px;
@@ -66,9 +74,12 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
 .submitBtn:hover {
   background-color: #0052cc;
 }
+
+/* ✅ Крестик отмены: всегда видим и кликабелен */
 .cancelBtn {
   background: none;
   border: none;
@@ -76,15 +87,20 @@
   color: #5e6c84;
   cursor: pointer;
   padding: 4px 8px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* ✅ Не сжимается, даже если текст длинный */
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
+
 .cancelBtn:hover {
   color: #172b4d;
 }
 
-/* ✅ Селект для перемещения задач */
+/* ✅ Селект для перемещения задач: гарантируем стрелку на всех браузерах */
 .taskDropdown {
-  flex: 1;
+  flex: 1 1 0%; /* ✅ Явно задаёт базу 0%, игнорируя длину текста */
+  min-width: 0; /* ✅ Разрешает сжатие внутри flex-контейнера */
   background: transparent;
   border: none;
   outline: none;
@@ -92,6 +108,11 @@
   font-size: 14px;
   color: #172b4d;
   cursor: pointer;
-  padding: 4px 0;
-  appearance: auto;
+  padding: 4px 20px 4px 0;
+  appearance: menulist;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* ✅ Длинные названия задач аккуратно обрежутся */
 }
