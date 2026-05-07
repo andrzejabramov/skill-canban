@@ -15,24 +15,25 @@ const UserMenu: React.FC = () => {
         type="button"
       >
         {/* ✅ Аватар с инлайн-стилями и фолбэком */}
-        <div className={styles.avatarWrapper}>
+        <div className={styles.avatarCircle}>
           <img
-            src="./img/user-avatar.svg"
+            src={`${process.env.PUBLIC_URL}/img/user-avatar.svg`}
             alt="User avatar"
             className={styles.avatarImg}
             onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = "none";
-              if (target.parentElement) {
-                target.parentElement.style.background = "#0079bf";
-                target.parentElement.textContent = "A";
-                target.parentElement.style.color = "#fff";
-                target.parentElement.style.fontSize = "18px";
-                target.parentElement.style.fontWeight = "bold";
-                target.parentElement.style.display = "flex";
-                target.parentElement.style.alignItems = "center";
-                target.parentElement.style.justifyContent = "center";
-              }
+              const img = e.currentTarget;
+              const parent = img?.parentElement;
+              if (!parent) return; // ✅ Полная защита от null
+
+              img.style.display = "none";
+              parent.style.background = "#0079bf";
+              parent.style.color = "#fff";
+              parent.style.display = "flex";
+              parent.style.alignItems = "center";
+              parent.style.justifyContent = "center";
+              parent.textContent = "A";
+              parent.style.fontSize = "18px";
+              parent.style.fontWeight = "bold";
             }}
           />
         </div>
