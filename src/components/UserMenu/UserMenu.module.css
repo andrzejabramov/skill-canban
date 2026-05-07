@@ -72,7 +72,7 @@
 .dropdown {
   position: absolute;
   /* ✅ Центрируем блок относительно аватара */
-  left: -83%;
+  left: -78%;
   top: calc(100% + 7px);
 
   width: 134px;
