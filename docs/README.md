@@ -1,46 +1,111 @@
-# Getting Started with Create React App
+# 📋 Awesome Kanban Board
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Интерактивная Kanban-доска для управления задачами. Создана с использованием React, TypeScript и CSS Modules. Полностью адаптивна, данные сохраняются в `localStorage`, проект задеплоен на GitHub Pages.
 
-## Available Scripts
+🔗 **Демо:** https://andrzejabramov.github.io/skill-canban/  
+📂 **Репозиторий:** https://github.com/andrzejabramov/skill-canban
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Реализованный функционал
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- ✅ **4 колонки:** Backlog → Ready → In Progress → Finished
+- ✅ **Создание задач** в колонке Backlog
+- ✅ **Перемещение задач** между колонками (последовательно, из предыдущей в текущую)
+- ✅ **Детальный просмотр** задачи с редактированием описания
+- ✅ **Визуальная блокировка** кнопки `+ Add card`, если в источнике нет задач
+- ✅ **UserMenu** с выпадающим списком и SVG-аватаром (соответствует макету Figma)
+- ✅ **Адаптивная вёрстка** (Desktop + Mobile ≤768px)
+- ✅ **Сохранение состояния** в `localStorage` с восстановлением при перезагрузке
+- ✅ **TypeScript** (строгая типизация, 0 ошибок компиляции)
+- ✅ **Юнит-тесты** (9 тестов, Jest + React Testing Library)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Стек технологий
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Категория     | Инструменты                  |
+| ------------- | ---------------------------- |
+| Frontend      | React 19, React Router v7    |
+| Язык          | TypeScript 4.9               |
+| Стилизация    | CSS Modules, CSS Variables   |
+| Тестирование  | Jest, React Testing Library  |
+| Сборка/Деплой | Create React App, `gh-pages` |
+| Хранение      | `localStorage`               |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Запуск проекта
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# 1. Клонируйте репозиторий
+git clone https://github.com/andrzejabramov/skill-canban.git
+cd skill-canban
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 2. Установите зависимости
+npm install
 
-### `npm run eject`
+# 3. Запустите локальный сервер
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Откройте http://localhost:3000
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🧪 Тестирование
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+# Запуск всех тестов
+npm test
 
-## Learn More
+# Запуск без watch-режима
+npm test -- --watchAll=false
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Все 9 тестов проверяют: редюсер состояния, рендер формы добавления задач, рендер карточки задачи.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+
+## 📦 Сборка и деплой
+
+```bash
+# Сборка продакшн-версии
+npm run build
+
+# Деплой на GitHub Pages
+npm run deploy
+```
+
+Проект настроен на работу в подпапке (`homepage` в `package.json`), пути к ассетам генерируются автоматически.
+
+---
+
+## 📁 Структура проекта
+
+```
+src/
+├── components/layout/  # Header, Footer
+├── components/UserMenu/ # Аватар + выпадающее меню
+├── context/            # KanbanProvider, редюсер, стейт-менеджмент
+├── features/kanban/    # Column, TaskCard, AddCardForm
+├── pages/              # HomePage, TaskDetailPage
+├── styles/             # Глобальные стили и CSS-переменные
+├── tests/              # Настройка Jest
+└── types.ts            # TypeScript-интерфейсы
+```
+
+---
+
+## 👤 Автор
+
+**Andrzej Abramov**  
+🔗 [GitHub](https://github.com/andrzejabramov)
+
+---
+
+_Проект выполнен в рамках учебного задания._
+
+```
+
+```
