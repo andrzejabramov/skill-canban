@@ -40,7 +40,10 @@ const defaultState: KanbanState = {
 };
 
 // --- Reducer ---
-const kanbanReducer = (state: KanbanState, action: Action): KanbanState => {
+export const kanbanReducer = (
+  state: KanbanState,
+  action: Action,
+): KanbanState => {
   switch (action.type) {
     case "ADD_TASK": {
       const newTaskId = `task-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
