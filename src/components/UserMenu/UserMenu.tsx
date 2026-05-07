@@ -17,7 +17,7 @@ const UserMenu: React.FC = () => {
         <div className={styles.avatarCircle}>
           <div className={styles.avatarInner}>
             <img
-              src="/img/user-avatar.svg"
+              src={`${process.env.PUBLIC_URL}/img/user-avatar.svg`}
               alt="User avatar"
               className={styles.avatarImg}
             />
