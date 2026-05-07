@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/skill-canban/static/css/main.fbb958f7.css",
-    "main.js": "/skill-canban/static/js/main.0606e333.js",
+    "main.css": "/skill-canban/static/css/main.81744ed0.css",
+    "main.js": "/skill-canban/static/js/main.6d491ee6.js",
     "index.html": "/skill-canban/index.html",
-    "main.fbb958f7.css.map": "/skill-canban/static/css/main.fbb958f7.css.map",
-    "main.0606e333.js.map": "/skill-canban/static/js/main.0606e333.js.map"
+    "main.81744ed0.css.map": "/skill-canban/static/css/main.81744ed0.css.map",
+    "main.6d491ee6.js.map": "/skill-canban/static/js/main.6d491ee6.js.map"
   },
   "entrypoints": [
-    "static/css/main.fbb958f7.css",
-    "static/js/main.0606e333.js"
+    "static/css/main.81744ed0.css",
+    "static/js/main.6d491ee6.js"
   ]
 }
