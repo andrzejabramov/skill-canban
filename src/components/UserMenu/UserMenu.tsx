@@ -15,40 +15,28 @@ const UserMenu: React.FC = () => {
         type="button"
       >
         {/* ✅ Аватар с инлайн-стилями и фолбэком */}
-        <div
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            overflow: "hidden",
-            background: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
+        <div className={styles.avatarWrapper}>
           <img
             src="./img/user-avatar.svg"
             alt="User avatar"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
+            className={styles.avatarImg}
             onError={(e) => {
-              // Если SVG не загрузился — покажем цветной круг с буквой
               const target = e.target as HTMLImageElement;
               target.style.display = "none";
-              target.parentElement!.style.background = "#0079bf";
-              target.parentElement!.textContent = "A";
-              target.parentElement!.style.color = "#fff";
-              target.parentElement!.style.fontSize = "18px";
-              target.parentElement!.style.fontWeight = "bold";
+              if (target.parentElement) {
+                target.parentElement.style.background = "#0079bf";
+                target.parentElement.textContent = "A";
+                target.parentElement.style.color = "#fff";
+                target.parentElement.style.fontSize = "18px";
+                target.parentElement.style.fontWeight = "bold";
+                target.parentElement.style.display = "flex";
+                target.parentElement.style.alignItems = "center";
+                target.parentElement.style.justifyContent = "center";
+              }
             }}
           />
         </div>
+
         <div className={styles.arrowBlock}>
           <svg
             className={`${styles.arrowDown} ${isOpen ? styles.open : ""}`}

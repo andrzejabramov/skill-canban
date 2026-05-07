@@ -160,3 +160,13 @@
 .cancelBtn:hover {
   color: #172b4d;
 }
+
+/* ✅ ВИЗУАЛИЗАЦИЯ НЕАКТИВНОЙ КНОПКИ + ADD CARD */
+.addButton:disabled,
+.addButton:disabled:hover {
+  color: #a5adba !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  text-decoration: none !important;
+  pointer-events: none;
+}

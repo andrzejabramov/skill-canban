@@ -6,13 +6,7 @@ import React, {
   useCallback,
   ReactNode,
 } from "react";
-import { ColumnId, Task } from "../types"; // Проверь путь, если типы лежат в ../types
-
-export interface KanbanState {
-  columns: Record<ColumnId, { id: ColumnId; title: string }>;
-  tasks: Record<string, Task>;
-  columnOrder: ColumnId[];
-}
+import { ColumnId, Task, KanbanState } from "../types"; // Проверь путь, если типы лежат в ../types
 
 type Action =
   | { type: "ADD_TASK"; payload: { columnId: ColumnId; title: string } }
@@ -101,29 +95,34 @@ export const KanbanProvider = ({ children }: { children: ReactNode }) => {
 
   const [state, dispatch] = useReducer(kanbanReducer, undefined, loadState);
 
-  // ✅ Автоматическое сохранение при ЛЮБОМ изменении state
   // ✅ Сохранение в localStorage с обработкой ошибок
   useEffect(() => {
-    console.log(
-      "🔄 [KanbanContext] State изменился. Текущие задачи:",
-      state.tasks,
-    );
+    // ✅ Логируем только в режиме разработки
+    if (process.env.NODE_ENV === "development") {
+      console.log(
+        "🔄 [KanbanContext] State изменился. Текущие задачи:",
+        state.tasks,
+      );
+    }
 
     try {
       const serialized = JSON.stringify(state);
       localStorage.setItem(STORAGE_KEY, serialized);
-      // Для отладки можно раскомментировать:
-      // console.log("Saved to localStorage:", state);
-      console.log("✅ [LocalStorage] Сохранено успешно! Ключ:", STORAGE_KEY);
-      console.log(
-        "💾 [LocalStorage] Размер данных:",
-        serialized.length,
-        "символов",
-      );
+
+      // ✅ Логи успешного сохранения — тоже только в dev
+      if (process.env.NODE_ENV === "development") {
+        console.log("✅ [LocalStorage] Сохранено успешно! Ключ:", STORAGE_KEY);
+        console.log(
+          "💾 [LocalStorage] Размер данных:",
+          serialized.length,
+          "символов",
+        );
+      }
     } catch (error) {
+      // ✅ Ошибки логируем всегда (важно для отладки в продакшене)
       console.error("❌ Failed to save to localStorage:", error);
     }
-  }, [state]); // Зависимость только от state
+  }, [state]);
 
   const getTasksByColumn = useCallback(
     (columnId: ColumnId) =>

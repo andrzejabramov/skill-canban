@@ -1,5 +1,5 @@
-import { kanbanReducer, KanbanState } from "../KanbanContext";
-import { ColumnId, Task } from "../../types";
+import { kanbanReducer } from "../KanbanContext";
+import { KanbanState, ColumnId, Task } from "../../types";
 
 describe("kanbanReducer", () => {
   const initialState: KanbanState = {
@@ -85,7 +85,7 @@ describe("kanbanReducer", () => {
   });
 
   test("неизвестный action возвращает состояние без изменений", () => {
-    const newState = kanbanReducer(initialState, { type: "UNKNOWN" as any });
+    const newState = kanbanReducer(initialState, { type: "UNKNOWN" } as any);
     expect(newState).toBe(initialState); // Проверка на неизменность (immutability не требуется, но поведение корректно)
   });
 });

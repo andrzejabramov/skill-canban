@@ -26,18 +26,18 @@
   flex-shrink: 0; /* ✅ Запрещаем сжатие кнопки */
 }
 
-/* .avatarCircle {
+.avatarCircle {
   width: 40px;
   height: 40px;
   border: 2px solid var(--color-border-white);
   background-color: var(--color-border-white);
   border-radius: 50%; /* ✅ Круг всегда */
-/*display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0; /* ✅ Запрещаем сжатие */
-/*}
+}
 
 .avatarInner {
   width: 26.2px;
@@ -54,7 +54,7 @@
   object-fit: cover;
   display: block;
   transform: translateY(2px); /* Твой сдвиг вниз */
-/*} */
+}
 
 .arrowBlock {
   width: 24px;

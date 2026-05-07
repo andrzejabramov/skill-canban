@@ -18,17 +18,25 @@ const sourceMap: Record<ColumnId, ColumnId | null> = {
 };
 
 const Column: React.FC<ColumnProps> = ({ columnId, title }) => {
-  const { getTasksByColumn, dispatch } = useKanban();
-  const tasks = getTasksByColumn(columnId);
+  const { state, dispatch } = useKanban();
+
+  // ✅ Получаем задачи через фильтрацию из общего стейта (гарантирует реактивность)
+  const tasks = Object.values(state.tasks).filter(
+    (t) => t.columnId === columnId,
+  );
+
   const isBacklog = columnId === "backlog";
   const sourceId = sourceMap[columnId];
-  const sourceTasks = sourceId ? getTasksByColumn(sourceId) : [];
+
+  // ✅ Источник задач для перемещения (пересчитывается при любом изменении стейта)
+  const sourceTasks = sourceId
+    ? Object.values(state.tasks).filter((t) => t.columnId === sourceId)
+    : [];
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const listRef = useRef<HTMLUListElement>(null);
 
-  // Авто-скролл к форме при открытии
   useEffect(() => {
     if (isFormOpen && listRef.current) {
       listRef.current.parentElement?.scrollTo({
@@ -58,9 +66,12 @@ const Column: React.FC<ColumnProps> = ({ columnId, title }) => {
     const from = sourceMap[columnId];
     if (from) {
       dispatch({ type: "MOVE_TASK", payload: { taskId, from, to: columnId } });
-      closeForm(); // ✅ Перемещение сразу при выборе
+      closeForm();
     }
   };
+
+  // ✅ Явное условие: кнопка дизейблена, если не бэклог И в источнике нет задач
+  const isAddButtonDisabled = !isBacklog && sourceTasks.length === 0;
 
   return (
     <section className={styles.column}>
@@ -85,24 +96,23 @@ const Column: React.FC<ColumnProps> = ({ columnId, title }) => {
         </ul>
       </div>
 
-      {/* ✅ ФУТЕР: Адаптируется ТОЛЬКО для Backlog */}
+      {/* ✅ ФУТЕР: Кнопка с корректным disabled */}
       <footer className={styles.columnFooter}>
         {isBacklog && isFormOpen ? (
-          // 🔹 Backlog + форма открыта → показываем Submit
           <button
             className={styles.submitBtn}
             type="button"
             onClick={handleAddTask}
+            disabled={inputValue.trim().length === 0}
           >
             Submit
           </button>
         ) : (
-          // 🔹 Все остальные случаи → всегда + Add card
           <button
             className={styles.addButton}
             type="button"
             onClick={toggleForm}
-            disabled={!isBacklog && sourceTasks.length === 0}
+            disabled={isAddButtonDisabled} // ✅ Ключевая строка
           >
             + Add card
           </button>
