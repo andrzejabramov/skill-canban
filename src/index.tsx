@@ -12,7 +12,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    {/* ✅ basename берёт путь репозитория из package.json */}
+    <BrowserRouter basename={process.env.PUBLIC_URL || "/"}>
       <KanbanProvider>
         <App />
       </KanbanProvider>
