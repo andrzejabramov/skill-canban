@@ -14,14 +14,40 @@ const UserMenu: React.FC = () => {
         aria-haspopup="true"
         type="button"
       >
-        <div className={styles.avatarCircle}>
-          <div className={styles.avatarInner}>
-            <img
-              src="./img/user-avatar.svg"
-              alt="User avatar"
-              className={styles.avatarImg}
-            />
-          </div>
+        {/* ✅ Аватар с инлайн-стилями и фолбэком */}
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: "50%",
+            overflow: "hidden",
+            background: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <img
+            src="./img/user-avatar.svg"
+            alt="User avatar"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            onError={(e) => {
+              // Если SVG не загрузился — покажем цветной круг с буквой
+              const target = e.target as HTMLImageElement;
+              target.style.display = "none";
+              target.parentElement!.style.background = "#0079bf";
+              target.parentElement!.textContent = "A";
+              target.parentElement!.style.color = "#fff";
+              target.parentElement!.style.fontSize = "18px";
+              target.parentElement!.style.fontWeight = "bold";
+            }}
+          />
         </div>
         <div className={styles.arrowBlock}>
           <svg
