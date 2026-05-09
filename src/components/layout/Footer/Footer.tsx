@@ -6,7 +6,7 @@ import styles from "./Footer.module.css";
 const Footer: React.FC = () => {
   const { state } = useKanban();
   const activeCount = Object.values(state.tasks).filter(
-    (t) => t.columnId === "backlog",
+    (t) => ["backlog", "ready", "in-progress"].includes(t.columnId), // ✅ Используем деструктуризацию
   ).length;
   const finishedCount = Object.values(state.tasks).filter(
     (t) => t.columnId === "finished",
